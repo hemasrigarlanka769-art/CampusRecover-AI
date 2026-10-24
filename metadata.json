@@ -1,0 +1,8 @@
+{
+  "name": "Remix CampusRecover AI – Smart Campus Lost \u0026 Found System",
+  "description": "AI-powered campus lost and found platform with multimodal matching, private ownership verification, secure messaging, and safe campus return checkpoints.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

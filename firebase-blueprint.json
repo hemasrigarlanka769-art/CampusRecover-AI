@@ -1,0 +1,173 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Registered campus user profile in CampusRecover AI",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "studentId": { "type": "string" },
+        "role": { "type": "string", "enum": ["STUDENT", "FACULTY", "CAMPUS_STAFF", "ADMIN"] },
+        "department": { "type": "string" },
+        "campus": { "type": "string" },
+        "isVerified": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "email", "role", "campus"]
+    },
+    "LostItem": {
+      "title": "LostItem",
+      "description": "Lost property report filed by a campus user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "itemName": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "brand": { "type": "string" },
+        "model": { "type": "string" },
+        "color": { "type": "string" },
+        "building": { "type": "string" },
+        "room": { "type": "string" },
+        "campusArea": { "type": "string" },
+        "dateLost": { "type": "string" },
+        "status": { "type": "string", "enum": ["ACTIVE", "POTENTIAL_MATCH", "MATCH_CONFIRMED", "FOUND", "RETURNED", "CLOSED"] },
+        "images": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "itemName", "category", "description", "color", "building", "dateLost", "status"]
+    },
+    "FoundItem": {
+      "title": "FoundItem",
+      "description": "Found property report registered by a campus member or staff",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "itemName": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "brand": { "type": "string" },
+        "model": { "type": "string" },
+        "color": { "type": "string" },
+        "building": { "type": "string" },
+        "room": { "type": "string" },
+        "campusArea": { "type": "string" },
+        "dateFound": { "type": "string" },
+        "internalOfficeStorage": { "type": "string" },
+        "status": { "type": "string", "enum": ["ACTIVE", "POTENTIAL_OWNER", "OWNER_VERIFIED", "RETURNED", "DONATED_ARCHIVED", "CLOSED"] },
+        "images": { "type": "array", "items": { "type": "string" } },
+        "sensitiveNotesPrivate": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "itemName", "category", "description", "color", "building", "dateFound", "status"]
+    },
+    "AIMatch": {
+      "title": "AIMatch",
+      "description": "Hybrid AI match candidate linking a lost report with a found item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "lostItemId": { "type": "string" },
+        "foundItemId": { "type": "string" },
+        "overallScore": { "type": "number" },
+        "textSimilarity": { "type": "number" },
+        "imageSimilarity": { "type": "number" },
+        "metadataSimilarity": { "type": "number" },
+        "locationSimilarity": { "type": "number" },
+        "timeSimilarity": { "type": "number" },
+        "classification": { "type": "string" },
+        "reasons": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "lostItemId", "foundItemId", "overallScore", "classification"]
+    },
+    "Claim": {
+      "title": "Claim",
+      "description": "Private ownership verification claim record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "lostItemId": { "type": "string" },
+        "foundItemId": { "type": "string" },
+        "claimantId": { "type": "string" },
+        "claimantName": { "type": "string" },
+        "claimantEmail": { "type": "string" },
+        "finderId": { "type": "string" },
+        "finderName": { "type": "string" },
+        "status": { "type": "string", "enum": ["PENDING", "UNDER_REVIEW", "VERIFIED", "REJECTED", "RETURNED"] },
+        "meetingLocation": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "lostItemId", "foundItemId", "claimantId", "finderId", "status"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Encrypted in-app message within a matched case conversation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "conversationId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "content": { "type": "string" },
+        "isE2EE": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "conversationId", "senderId", "content", "createdAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "System or match alert for a user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string" },
+        "link": { "type": "string" },
+        "isRead": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "message", "type", "isRead", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and credentials"
+    },
+    "/lost_items/{lostItemId}": {
+      "schema": "LostItem",
+      "description": "Active and resolved lost property reports"
+    },
+    "/found_items/{foundItemId}": {
+      "schema": "FoundItem",
+      "description": "Active and resolved found property reports"
+    },
+    "/matches/{matchId}": {
+      "schema": "AIMatch",
+      "description": "AI calculated match pairings"
+    },
+    "/claims/{claimId}": {
+      "schema": "Claim",
+      "description": "Ownership verification claims"
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Protected conversation messages"
+    },
+    "/notifications/{notifId}": {
+      "schema": "Notification",
+      "description": "User notification alerts"
+    }
+  }
+}
